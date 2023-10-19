@@ -6,6 +6,7 @@ import { VIEW } from '../AppConstant'
 import { Viewport as PixiViewport } from 'pixi-viewport'
 import { EventSystem } from 'pixi.js'
 import PropTypes from 'prop-types'
+import Background from './background'
 
 const areas = {
     world: [1000, 1000, 2000, 2000],
@@ -103,8 +104,8 @@ const Game = ({
         setTimeout(() => {
             const viewport = viewportRef.current
 
-            viewport.snapZoom({ width: 1000, height: 1000 })
-            viewport.follow(followBunny.current, { speed: 20 })
+            /* viewport.snapZoom({ width: 1000, height: 1000 })
+               viewport.follow(followBunny.current, { speed: 20 }) */
         }, 500)
     }, [])
 
@@ -131,14 +132,9 @@ const Game = ({
             </div>
 
             <Stage width={width} height={height} options={stageOptions}>
-                <Viewport width={width} height={height} ref={viewportRef} followBunny={followBunny}>
-                    <BunniesContainer name="tl" />
-                    <BunniesContainer name="tr" />
-                    <BunniesContainer name="bl" />
-                    <BunniesContainer name="br" />
-                    <BunniesContainer name="center" scale={2} />
 
-                    <BunnyFollowingCircle x={1000} y={1000} rad={500} ref={followBunny} />
+                <Viewport width={width} height={height} ref={viewportRef}>
+                    <Background width={width} height={height}/>
                 </Viewport>
             </Stage>
         </>
