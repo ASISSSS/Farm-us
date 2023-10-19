@@ -1,56 +1,12 @@
 import React, { forwardRef, useEffect, useRef } from 'react'
-import { Stage, Container, Sprite, PixiComponent, useApp } from '@pixi/react'
+import { Stage, PixiComponent, useApp } from '@pixi/react'
 import useResize from '../hooks/useResize'
-import useIteration from '../hooks/useIteration'
-import { VIEW } from '../AppConstant'
+import { VIEW, WORLD_SIZE } from '../AppConstant'
 import { Viewport as PixiViewport } from 'pixi-viewport'
 import { EventSystem } from 'pixi.js'
 import PropTypes from 'prop-types'
 import Background from './background'
-
-const areas = {
-    world: [1000, 1000, 2000, 2000],
-    center: [1000, 1000, 400, 400],
-    tl: [100, 100, 200, 200],
-    tr: [1900, 100, 200, 200],
-    bl: [100, 1900, 200, 200],
-    br: [1900, 1900, 200, 200],
-}
-
-
-// Wiggling bunny
-const Bunny = forwardRef((props, ref) => {
-    // abstracted away, see settings>js
-    const i = useIteration(0.1)
-    return (
-        <Sprite
-            ref={ref}
-            image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png"
-            anchor={0.5}
-            scale={2}
-            rotation={Math.cos(i) * 0.98}
-            {...props}
-        />
-    )
-})
-
-const BunniesContainer = ({ name, ...props }) => {
-    const [x, y] = areas[name]
-
-    return (
-        <Container x={x} y={y} {...props}>
-            <Bunny x={-50} y={-50} />
-            <Bunny x={50} y={-50} />
-            <Bunny x={-50} y={50} />
-            <Bunny x={50} y={50} />
-        </Container>
-    )
-}
-
-const BunnyFollowingCircle = forwardRef(({ x, y, rad }, ref) => {
-    const i = useIteration(0.02)
-    return <Bunny ref={ref} x={x + Math.cos(i) * rad} y={y + Math.sin(i) * rad} scale={6} />
-})
+import Player from './entity/Player'
 
 const PixiViewportComponent = PixiComponent('Viewport', {
     create: (props) => {
@@ -59,12 +15,10 @@ const PixiViewportComponent = PixiComponent('Viewport', {
         const viewport = new PixiViewport({
             screenWidth: props.width,
             screenHeight: props.height,
-            worldWidth: props.width * 2,
-            worldHeight: props.height * 2,
+            worldWidth: WORLD_SIZE.WIDTH,
+            worldHeight: WORLD_SIZE.HEIGHT,
             ticker: props.app.ticker,
-            interaction: props.app.renderer.plugins.interaction,
             events,
-            passiveWheel: false,
         })
         return viewport
     },
@@ -79,7 +33,11 @@ const PixiViewportComponent = PixiComponent('Viewport', {
 const Viewport = forwardRef((props, ref) => {
     const app = useApp()
     return (
-        <PixiViewportComponent ref={ref} app={app} {...props} />
+        <PixiViewportComponent
+            ref={ref}
+            app={app}
+            {...props}
+        />
     )
 })
 
@@ -90,7 +48,7 @@ const Game = ({
     const viewportRef = useRef()
 
     // get ref of the bunny to follow
-    const followBunny = useRef()
+    const playerRef = useRef()
 
     const [width, height] = useResize()
 
@@ -104,8 +62,8 @@ const Game = ({
         setTimeout(() => {
             const viewport = viewportRef.current
 
-            /* viewport.snapZoom({ width: 1000, height: 1000 })
-               viewport.follow(followBunny.current, { speed: 20 }) */
+            viewport.snapZoom({ width, height })
+            viewport.follow(playerRef.current, { speed: 20 })
         }, 500)
     }, [])
 
@@ -132,9 +90,22 @@ const Game = ({
             </div>
 
             <Stage width={width} height={height} options={stageOptions}>
+                <Viewport
+                    ref={viewportRef}
 
-                <Viewport width={width} height={height} ref={viewportRef}>
-                    <Background width={width} height={height}/>
+                    width={width}
+                    height={height}
+                    pointerdown={(e) => {
+                        const {
+                            x,
+                            y,
+                        } = viewportRef.current.toWorld(e.data.global.x, e.data.global.y)
+                        playerRef.current.x = x
+                        playerRef.current.y = y
+                    }}
+                >
+                    <Background />
+                    <Player x={6000} y={3500} ref={playerRef} />
                 </Viewport>
             </Stage>
         </>

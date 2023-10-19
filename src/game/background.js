@@ -1,22 +1,20 @@
-import React, { forwardRef } from 'react'
-import { Sprite, Stage } from '@pixi/react'
+import React from 'react'
+import { Sprite } from '@pixi/react'
 import map from '../assets/map.png'
+import { WORLD_SIZE } from '../AppConstant'
 
-const Background = forwardRef((props, ref) => {
-    const { width, height } = props
-
+const Background = () => {
     return (
         <Sprite
-            ref={ref}
             image={map}
-            scale={4}
-            anchor={0.5}
-            width={width * 2}
-            height={height * 2}
-            x={width / 2}
-            y={height / 2}
-            {...props}
+            scale={1}
+            anchor={0}
+            width={WORLD_SIZE.WIDTH}
+            height={WORLD_SIZE.HEIGHT}
+            x={0}
+            y={0}
         />
     )
-})
+}
+
 export default Background
