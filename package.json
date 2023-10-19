@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@pixi/react": "^7.1.1",
+    "pixi-viewport": "^5.0.2",
     "pixi.js": "^7.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -19,6 +20,9 @@
       "react-app"
     ]
   },
+  "eslintIgnore": [
+    "build/*"
+  ],
   "browserslist": {
     "production": [
       ">0.2%",
