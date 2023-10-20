@@ -100,12 +100,12 @@ const Game = ({
                             x,
                             y,
                         } = viewportRef.current.toWorld(e.data.global.x, e.data.global.y)
-                        playerRef.current.x = x
-                        playerRef.current.y = y
+                        playerRef.current.x = Math.min(Math.max(0,x),WORLD_SIZE.WIDTH)
+                        playerRef.current.y = Math.min(Math.max(0,y),WORLD_SIZE.HEIGHT)
                     }}
                 >
                     <Background />
-                    <Player x={6000} y={3500} ref={playerRef} />
+                    <Player x={6200} y={2100} ref={playerRef} />
                 </Viewport>
             </Stage>
         </>
