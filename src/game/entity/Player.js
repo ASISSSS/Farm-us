@@ -1,7 +1,8 @@
 import { Graphics, Sprite, useTick } from '@pixi/react'
 import React, { forwardRef, useCallback, useState } from 'react'
-
-const SPEED = 15
+import player1 from '../../assets/player/player1.png'
+import player2 from '../../assets/player/player2.png'
+import { PLAYER, WORLD_SIZE } from '../../AppConstant'
 
 const Player = forwardRef((props, ref) => {
     const {
@@ -10,6 +11,24 @@ const Player = forwardRef((props, ref) => {
         target,
     } = props
     const [pos, setPos] = useState({ x, y })
+
+    const animationImages = [player1, player2]
+
+    const [image, setImage] = useState(player1)
+    const [isChangeImage, setIsChangeImage] = useState(false)
+    const [frame, setFrame] = useState(PLAYER.CHANGE_IMAGE_FRAME - 1)
+    const [imageIndex, setIndex] = useState(0)
+
+    const updateImage = () => {
+        if(isChangeImage === true) {
+            const newIndex = (imageIndex + 1) % animationImages.length
+            setIndex(newIndex)
+            const nextImage = animationImages[newIndex]
+            setImage(nextImage)
+            setIsChangeImage(false)
+            setFrame(0)
+        }
+    }
 
     useTick(delta => {
         if (!target.current) return
@@ -24,15 +43,29 @@ const Player = forwardRef((props, ref) => {
                 y: distY / mag,
             }
 
-            const moveX = distNormalize.x * delta * SPEED
-            const moveY = distNormalize.y * delta * SPEED
+            const moveX = distNormalize.x * delta * PLAYER.SPEED
+            const moveY = distNormalize.y * delta * PLAYER.SPEED
 
-            if (Math.abs(moveX) >= Math.abs(distX) && Math.abs(moveY) >= Math.abs(distY)) {
-                target.current = undefined
-                return { x: prev.x + distX, y: prev.y + distY }
+            const newFrame = frame + 1
+            setFrame(newFrame)
+
+            if((newFrame % PLAYER.CHANGE_IMAGE_FRAME) === 0) {
+                setIsChangeImage(true)
             }
 
-            return { x: prev.x + moveX, y: prev.y + moveY }
+            updateImage()
+            if (Math.abs(moveX) >= Math.abs(distX) && Math.abs(moveY) >= Math.abs(distY)) {
+                target.current = undefined
+                return {
+                    x: Math.min(Math.max(0, prev.x + distX), WORLD_SIZE.WIDTH),
+                    y: Math.min(Math.max(0, prev.y + distY), WORLD_SIZE.HEIGHT),
+                }
+            }
+
+            return {
+                x:  Math.min(Math.max(0, prev.x + moveX), WORLD_SIZE.WIDTH),
+                y:Math.min(Math.max(0, prev.y + moveY ), WORLD_SIZE.HEIGHT)
+            }
         })
     })
 
@@ -52,9 +85,9 @@ const Player = forwardRef((props, ref) => {
             <Graphics draw={draw} />
             <Sprite
                 ref={ref}
-                image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/693612/IaUrttj.png"
+                image={image}
                 anchor={0.5}
-                scale={5}
+                scale={1}
                 x={pos.x}
                 y={pos.y}
             />

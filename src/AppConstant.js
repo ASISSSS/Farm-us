@@ -9,7 +9,15 @@ const WORLD_SIZE = {
     HEIGHT: 6922,
 }
 
+const PLAYER = {
+    SPEED: 15,
+    CHANGE_IMAGE_FRAME: 10,
+    POSITION_START_X: 6200,
+    POSITION_START_Y: 2100,
+}
+
 export {
     VIEW,
     WORLD_SIZE,
+    PLAYER,
 }

@@ -1,7 +1,7 @@
 import React, { forwardRef, useEffect, useRef } from 'react'
 import { Stage, PixiComponent, useApp } from '@pixi/react'
 import useResize from '../hooks/useResize'
-import { VIEW, WORLD_SIZE } from '../AppConstant'
+import { PLAYER, VIEW, WORLD_SIZE } from '../AppConstant'
 import { Viewport as PixiViewport } from 'pixi-viewport'
 import { EventSystem } from 'pixi.js'
 import PropTypes from 'prop-types'
@@ -103,7 +103,7 @@ const Game = ({
                     }}
                 >
                     <Background />
-                    <Player x={6200} y={2100} target={playerTarget} ref={playerRef} />
+                    <Player x={PLAYER.POSITION_START_X} y={PLAYER.POSITION_START_Y} target={playerTarget} ref={playerRef} />
                 </Viewport>
             </Stage>
         </>
