@@ -20,6 +20,8 @@ const PixiViewportComponent = PixiComponent('Viewport', {
             ticker: props.app.ticker,
             events,
         })
+        viewport.snap(6200, 2100, { removeOnComplete: true })
+        viewport.snapZoom({ width: props.width * 2, height: props.height * 2 })
         return viewport
     },
     willUnmount: (viewport) => {
@@ -50,6 +52,8 @@ const Game = ({
     // get ref of the bunny to follow
     const playerRef = useRef()
 
+    const playerTarget = useRef()
+
     const [width, height] = useResize()
 
     const stageOptions = {
@@ -62,7 +66,6 @@ const Game = ({
         setTimeout(() => {
             const viewport = viewportRef.current
 
-            viewport.snapZoom({ width, height })
             viewport.follow(playerRef.current, { speed: 20 })
         }, 500)
     }, [])
@@ -96,16 +99,11 @@ const Game = ({
                     width={width}
                     height={height}
                     pointerdown={(e) => {
-                        const {
-                            x,
-                            y,
-                        } = viewportRef.current.toWorld(e.data.global.x, e.data.global.y)
-                        playerRef.current.x = Math.min(Math.max(0,x),WORLD_SIZE.WIDTH)
-                        playerRef.current.y = Math.min(Math.max(0,y),WORLD_SIZE.HEIGHT)
+                        playerTarget.current = viewportRef.current.toWorld(e.data.global.x, e.data.global.y)
                     }}
                 >
                     <Background />
-                    <Player x={6200} y={2100} ref={playerRef} />
+                    <Player x={6200} y={2100} target={playerTarget} ref={playerRef} />
                 </Viewport>
             </Stage>
         </>
