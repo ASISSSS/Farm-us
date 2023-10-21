@@ -2,12 +2,14 @@ import React, { forwardRef, useEffect, useRef, useState } from 'react'
 import { Sprite } from '@pixi/react'
 import { green, blue, yellow, aliens, blue1, green1, yellow1, dirt } from '../../assets'
 import { DUMMIES_TYPES } from '../../AppConstant'
+import Dummy from './Dummy'
 
 const Spawner = forwardRef((props, ref) => {
     const { x, y, timer, type } = props
     const BASE_SCALE = 3
     const timerRef = useRef()
     const [displayDirtTrickY, setDisplayDirtTrick] = useState(BASE_SCALE)
+    const [spwanned, setSpwaned] = useState([])
 
     const getImage = () => {
         switch (type) {
@@ -28,6 +30,8 @@ const Spawner = forwardRef((props, ref) => {
         timerRef.current = setTimeout(() => {
             setDisplayDirtTrick((prevState) => {
                 if (prevState === 0) return BASE_SCALE
+
+                //setSpwaned([...spwanned, { x, y, image: amongUsImage }])
                 return 0
             })
         }, timer)
@@ -61,6 +65,10 @@ const Spawner = forwardRef((props, ref) => {
                 x={ x }
                 y={ y + 20 }
             />
+
+            { spwanned.map((dummyProps) => (
+                <Dummy { ...dummyProps }/>
+            )) }
         </>
     )
 })
