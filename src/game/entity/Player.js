@@ -3,6 +3,7 @@ import React, { forwardRef, useCallback, useState } from 'react'
 import { player1, player2 } from '../../assets'
 import { PLAYER, WORLD_SIZE } from '../../AppConstant'
 
+
 const Player = forwardRef((props, ref) => {
     const {
         x,
@@ -29,43 +30,48 @@ const Player = forwardRef((props, ref) => {
         }
     }
 
+    const line1 = [{ x: x - 150, y: y - 150 }, { x: x + 150, y: y + 150 }]
+    const line2 = [{ x: x + 150, y: y - 150 }, { x: x - 150, y: y + 150 }]
+
     useTick(delta => {
         if (!target.current) return
 
-        setPos(prev => {
-            const distX = target.current.x - prev.x
-            const distY = target.current.y - prev.y
+        // setPos({ x: target.current.x, y: target.current.y })
 
-            const mag = Math.sqrt(distX * distX + distY * distY)
-            const distNormalize = {
-                x: distX / mag,
-                y: distY / mag,
-            }
+        // setPos(prev => {
+        //     const distX = target.current.x - prev.x
+        //     const distY = target.current.y - prev.y
 
-            const moveX = distNormalize.x * delta * PLAYER.SPEED
-            const moveY = distNormalize.y * delta * PLAYER.SPEED
+        //     const mag = Math.sqrt(distX * distX + distY * distY)
+        //     const distNormalize = {
+        //         x: distX / mag,
+        //         y: distY / mag,
+        //     }
 
-            const newFrame = frame + 1
-            setFrame(newFrame)
+        //     const moveX = distNormalize.x * delta * PLAYER.SPEED
+        //     const moveY = distNormalize.y * delta * PLAYER.SPEED
 
-            if ((newFrame % PLAYER.CHANGE_IMAGE_FRAME) === 0) {
-                setIsChangeImage(true)
-            }
+        //     const newFrame = frame + 1
+        //     setFrame(newFrame)
 
-            updateImage()
-            if (Math.abs(moveX) >= Math.abs(distX) && Math.abs(moveY) >= Math.abs(distY)) {
-                target.current = undefined
-                return {
-                    x: Math.min(Math.max(0, prev.x + distX), WORLD_SIZE.WIDTH),
-                    y: Math.min(Math.max(0, prev.y + distY), WORLD_SIZE.HEIGHT),
-                }
-            }
+        //     if ((newFrame % PLAYER.CHANGE_IMAGE_FRAME) === 0) {
+        //         setIsChangeImage(true)
+        //     }
 
-            return {
-                x: Math.min(Math.max(0, prev.x + moveX), WORLD_SIZE.WIDTH),
-                y: Math.min(Math.max(0, prev.y + moveY), WORLD_SIZE.HEIGHT)
-            }
-        })
+        //     updateImage()
+        //     if (Math.abs(moveX) >= Math.abs(distX) && Math.abs(moveY) >= Math.abs(distY)) {
+        //         target.current = undefined
+        //         return {
+        //             x: Math.min(Math.max(0, prev.x + distX), WORLD_SIZE.WIDTH),
+        //             y: Math.min(Math.max(0, prev.y + distY), WORLD_SIZE.HEIGHT),
+        //         }
+        //     }
+
+        //     return {
+        //         x: Math.min(Math.max(0, prev.x + moveX), WORLD_SIZE.WIDTH),
+        //         y: Math.min(Math.max(0, prev.y + moveY), WORLD_SIZE.HEIGHT)
+        //     }
+        // })
     })
 
     // playerRef.current.x = Math.min(Math.max(0, x), WORLD_SIZE.WIDTH)
@@ -81,15 +87,15 @@ const Player = forwardRef((props, ref) => {
 
     return (
         <>
-            <Graphics draw={ draw }/>
             <Sprite
-                ref={ ref }
-                image={ image }
-                anchor={ 0.5 }
-                scale={ 1 }
-                x={ pos.x }
-                y={ pos.y }
+                ref={ref}
+                image={image}
+                anchor={0.5}
+                scale={1}
+                x={pos.x}
+                y={pos.y}
             />
+            {/* <Graphics draw={draw} /> */}
         </>
     )
 })
