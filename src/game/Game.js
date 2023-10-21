@@ -1,12 +1,12 @@
 import React, { forwardRef, useEffect, useRef } from 'react'
 import { Stage, PixiComponent, useApp } from '@pixi/react'
 import useResize from '../hooks/useResize'
-import { PLAYER, VIEW, WORLD_SIZE } from '../AppConstant'
+import { CAMERA, PLAYER, SPWANERS, VIEW, WORLD_SIZE } from '../AppConstant'
 import { Viewport as PixiViewport } from 'pixi-viewport'
 import { EventSystem } from 'pixi.js'
 import PropTypes from 'prop-types'
-import Background from './background'
-import Player from './entity/Player'
+import Background from './Background'
+import { Player, Spawner } from './entity'
 
 const PixiViewportComponent = PixiComponent('Viewport', {
     create: (props) => {
@@ -66,7 +66,7 @@ const Game = ({
         setTimeout(() => {
             const viewport = viewportRef.current
 
-            viewport.follow(playerRef.current, { speed: 20 })
+            viewport.follow(playerRef.current, { speed: CAMERA.SPEED })
         }, 500)
     }, [])
 
@@ -103,6 +103,9 @@ const Game = ({
                     }}
                 >
                     <Background />
+                    <Spawner {...SPWANERS.BLUE}/>
+                    <Spawner {...SPWANERS.GREEN}/>
+                    <Spawner {...SPWANERS.YELLOW}/>
                     <Player x={PLAYER.POSITION_START_X} y={PLAYER.POSITION_START_Y} target={playerTarget} ref={playerRef} />
                 </Viewport>
             </Stage>

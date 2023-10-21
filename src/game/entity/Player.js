@@ -1,7 +1,6 @@
 import { Graphics, Sprite, useTick } from '@pixi/react'
 import React, { forwardRef, useCallback, useState } from 'react'
-import player1 from '../../assets/player/player1.png'
-import player2 from '../../assets/player/player2.png'
+import { player1, player2 } from '../../assets'
 import { PLAYER, WORLD_SIZE } from '../../AppConstant'
 
 const Player = forwardRef((props, ref) => {
@@ -20,7 +19,7 @@ const Player = forwardRef((props, ref) => {
     const [imageIndex, setIndex] = useState(0)
 
     const updateImage = () => {
-        if(isChangeImage === true) {
+        if (isChangeImage === true) {
             const newIndex = (imageIndex + 1) % animationImages.length
             setIndex(newIndex)
             const nextImage = animationImages[newIndex]
@@ -49,7 +48,7 @@ const Player = forwardRef((props, ref) => {
             const newFrame = frame + 1
             setFrame(newFrame)
 
-            if((newFrame % PLAYER.CHANGE_IMAGE_FRAME) === 0) {
+            if ((newFrame % PLAYER.CHANGE_IMAGE_FRAME) === 0) {
                 setIsChangeImage(true)
             }
 
@@ -63,8 +62,8 @@ const Player = forwardRef((props, ref) => {
             }
 
             return {
-                x:  Math.min(Math.max(0, prev.x + moveX), WORLD_SIZE.WIDTH),
-                y:Math.min(Math.max(0, prev.y + moveY ), WORLD_SIZE.HEIGHT)
+                x: Math.min(Math.max(0, prev.x + moveX), WORLD_SIZE.WIDTH),
+                y: Math.min(Math.max(0, prev.y + moveY), WORLD_SIZE.HEIGHT)
             }
         })
     })
@@ -82,14 +81,14 @@ const Player = forwardRef((props, ref) => {
 
     return (
         <>
-            <Graphics draw={draw} />
+            <Graphics draw={ draw }/>
             <Sprite
-                ref={ref}
-                image={image}
-                anchor={0.5}
-                scale={1}
-                x={pos.x}
-                y={pos.y}
+                ref={ ref }
+                image={ image }
+                anchor={ 0.5 }
+                scale={ 1 }
+                x={ pos.x }
+                y={ pos.y }
             />
         </>
     )
