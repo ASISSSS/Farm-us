@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Graphics, Sprite, useTick } from '@pixi/react'
 import { WORLD_SIZE } from '../../AppConstant'
-// import jsonGrid from '../../assets/grid.json'
+import jsonGrid from '../../assets/grid.json'
 
 const CELL_SIZE = 10
 const LINE_WIDTH = 0.3
@@ -10,13 +10,18 @@ const GridBuilder = ({
     clickPos,
 }) => {
     const [grid, setGrid] = useState(() => {
-        // if (jsonGrid?.grid) return jsonGrid.grid
+        if (jsonGrid?.grid) return jsonGrid.grid
 
         const nbVert = Math.round(WORLD_SIZE.WIDTH / CELL_SIZE)
         const nbHori = Math.round(WORLD_SIZE.HEIGHT / CELL_SIZE)
 
-        const defaultGrid = new Array(nbVert * nbHori)
-        for (let i = 0; i < nbVert * nbHori; i++) defaultGrid[i] = 0
+        let defaultGrid = new Array(nbHori)
+        for (let i = 0; i < nbHori; i++) {
+            defaultGrid[i] = new Array(nbVert)
+            for (let j = 0; j < nbVert; j++) {
+                defaultGrid[i][j] = 0
+            }
+        }
         return defaultGrid
     })
 
@@ -32,13 +37,17 @@ const GridBuilder = ({
                 setGrid(p => {
                     const nbVert = Math.round(WORLD_SIZE.WIDTH / CELL_SIZE)
 
-                    const col = Math.floor(clickPos.current.x / CELL_SIZE)
-                    const row = Math.floor(clickPos.current.y / CELL_SIZE)
-                    const index = nbVert * row + col
+                    const colIndex = Math.floor(clickPos.current.x / CELL_SIZE)
+                    const rowIndex = Math.floor(clickPos.current.y / CELL_SIZE)
+                    const newRow = [
+                        ...p[rowIndex].slice(0, colIndex),
+                        p[rowIndex][colIndex] === 1 ? 0 : 1,
+                        ...p[rowIndex].slice(colIndex + 1),
+                    ]
                     return [
-                        ...p.slice(0, index),
-                        p[index] === 1 ? 0 : 1,
-                        ...p.slice(index + 1),
+                        ...p.slice(0, rowIndex),
+                        newRow,
+                        ...p.slice(rowIndex + 1),
                     ]
                 })
             }
@@ -49,25 +58,23 @@ const GridBuilder = ({
         g.clear()
         g.lineStyle(LINE_WIDTH, 0xff0000)
 
-        const nbVert = Math.round(WORLD_SIZE.WIDTH / CELL_SIZE)
-        const sizeVert = WORLD_SIZE.WIDTH / nbVert
+        const nbVert = grid[0]?.length ?? 0
         for (let i = 0; i < nbVert; i++) {
-            g.moveTo(i * sizeVert, 0)
-            g.lineTo(i * sizeVert, WORLD_SIZE.HEIGHT)
+            g.moveTo(i * CELL_SIZE, 0)
+            g.lineTo(i * CELL_SIZE, WORLD_SIZE.HEIGHT)
         }
 
 
-        const nbHori = Math.round(WORLD_SIZE.HEIGHT / CELL_SIZE)
-        const sizeHori = WORLD_SIZE.HEIGHT / nbHori
+        const nbHori = grid.length
         for (let i = 0; i < nbHori; i++) {
-            g.moveTo(0, i * sizeHori)
-            g.lineTo(WORLD_SIZE.WIDTH, i * sizeHori)
+            g.moveTo(0, i * CELL_SIZE)
+            g.lineTo(WORLD_SIZE.WIDTH, i * CELL_SIZE)
         }
 
-        for (let i = 0; i < nbVert; i++) {
-            for (let j = 0; j < nbHori; j++) {
+        for (let i = 0; i < nbHori; i++) {
+            for (let j = 0; j < nbVert; j++) {
                 g.beginFill(0xff0000)
-                if (grid[nbVert * j + i] === 1) g.drawCircle(i * CELL_SIZE + (CELL_SIZE / 2), j * CELL_SIZE + (CELL_SIZE / 2), CELL_SIZE / 2)
+                if (grid[i][j] === 1) g.drawCircle(j * CELL_SIZE + (CELL_SIZE / 2), i * CELL_SIZE + (CELL_SIZE / 2), CELL_SIZE / 2)
             }
         }
         g.endFill()
@@ -95,14 +102,14 @@ const GridBuilder = ({
                         scale={0.13}
                         x={pos.x + 50}
                         y={pos.y - 50}
-                        // interactive
-                        // pointerdown={() => {
-                        //     let dataStr = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify({ grid }))}`
-                        //     let downloadAnchorNode = document.createElement('a')
-                        //     downloadAnchorNode.setAttribute('href', dataStr)
-                        //     downloadAnchorNode.setAttribute('download', 'grid.json')
-                        //     downloadAnchorNode.click()
-                        // }}
+                        interactive
+                        pointerdown={() => {
+                            let dataStr = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify({ grid }))}`
+                            let downloadAnchorNode = document.createElement('a')
+                            downloadAnchorNode.setAttribute('href', dataStr)
+                            downloadAnchorNode.setAttribute('download', 'grid.json')
+                            downloadAnchorNode.click()
+                        }}
                     />
                 )
             }
