@@ -22,8 +22,9 @@ const PixiViewportComponent = PixiComponent('Viewport', {
             events,
         })
         viewport.drag().pinch().wheel().clampZoom()
-        // viewport.snap(6200, 2100, { removeOnComplete: true })
-        // viewport.snapZoom({ width: props.width * 2, height: props.height * 2 })
+        // viewport.snap(PLAYER.POSITION_START_X, PLAYER.POSITION_START_Y, { removeOnComplete: true })
+        // viewport.snapZoom({ width: props.width / 5, height: props.height / 5 })
+        // viewport.snapZoom({ width: props.width, height: props.height })
         return viewport
     },
     willUnmount: (viewport) => {
@@ -110,7 +111,7 @@ const Game = ({
                     <Spawner {...SPWANERS.GREEN}/>
                     <Spawner {...SPWANERS.YELLOW}/>
                     <GridBuilder clickPos={clickPos} />
-                    <Player x={PLAYER.POSITION_START_X} y={PLAYER.POSITION_START_Y} target={clickPos} ref={playerRef} />
+                    {/* <Player x={PLAYER.POSITION_START_X} y={PLAYER.POSITION_START_Y} target={clickPos} ref={playerRef} /> */}
                 </Viewport>
             </Stage>
         </>

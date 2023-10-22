@@ -1,10 +1,8 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Graphics, Sprite, useTick } from '@pixi/react'
-import { WORLD_SIZE } from '../../AppConstant'
+import { GRID, WORLD_SIZE } from '../../AppConstant'
 import jsonGrid from '../../assets/grid.json'
 
-const CELL_SIZE = 10
-const LINE_WIDTH = 0.3
 
 const GridBuilder = ({
     clickPos,
@@ -12,8 +10,8 @@ const GridBuilder = ({
     const [grid, setGrid] = useState(() => {
         if (jsonGrid?.grid) return jsonGrid.grid
 
-        const nbVert = Math.round(WORLD_SIZE.WIDTH / CELL_SIZE)
-        const nbHori = Math.round(WORLD_SIZE.HEIGHT / CELL_SIZE)
+        const nbVert = Math.round(WORLD_SIZE.WIDTH / GRID.CELL_SIZE)
+        const nbHori = Math.round(WORLD_SIZE.HEIGHT / GRID.CELL_SIZE)
 
         let defaultGrid = new Array(nbHori)
         for (let i = 0; i < nbHori; i++) {
@@ -35,8 +33,8 @@ const GridBuilder = ({
             setPos({ x: clickPos.current.x, y: clickPos.current.y })
             if (isEditing) {
                 setGrid(p => {
-                    const colIndex = Math.floor(clickPos.current.x / CELL_SIZE)
-                    const rowIndex = Math.floor(clickPos.current.y / CELL_SIZE)
+                    const colIndex = Math.floor(clickPos.current.x / GRID.CELL_SIZE)
+                    const rowIndex = Math.floor(clickPos.current.y / GRID.CELL_SIZE)
                     const newRow = [
                         ...p[rowIndex].slice(0, colIndex),
                         p[rowIndex][colIndex] === 1 ? 0 : 1,
@@ -54,27 +52,28 @@ const GridBuilder = ({
 
     const draw = useCallback(g => {
         g.clear()
-        g.lineStyle(LINE_WIDTH, 0xff0000)
+        g.lineStyle(GRID.LINE_WIDTH, 0xff0000)
 
         const nbVert = grid[0]?.length ?? 0
         for (let i = 0; i < nbVert; i++) {
-            g.moveTo(i * CELL_SIZE, 0)
-            g.lineTo(i * CELL_SIZE, WORLD_SIZE.HEIGHT)
+            g.moveTo(i * GRID.CELL_SIZE, 0)
+            g.lineTo(i * GRID.CELL_SIZE, WORLD_SIZE.HEIGHT)
         }
 
 
         const nbHori = grid.length
         for (let i = 0; i < nbHori; i++) {
-            g.moveTo(0, i * CELL_SIZE)
-            g.lineTo(WORLD_SIZE.WIDTH, i * CELL_SIZE)
+            g.moveTo(0, i * GRID.CELL_SIZE)
+            g.lineTo(WORLD_SIZE.WIDTH, i * GRID.CELL_SIZE)
         }
 
+        g.beginFill(0xff0000)
         for (let i = 0; i < nbHori; i++) {
             for (let j = 0; j < nbVert; j++) {
-                g.beginFill(0xff0000)
-                if (grid[i][j] === 0) g.drawCircle(j * CELL_SIZE + (CELL_SIZE / 2), i * CELL_SIZE + (CELL_SIZE / 2), CELL_SIZE / 2)
+                if (grid[i][j] === 0) g.drawCircle(j * GRID.CELL_SIZE + (GRID.CELL_SIZE / 2), i * GRID.CELL_SIZE + (GRID.CELL_SIZE / 2), GRID.CELL_SIZE / 2)
             }
         }
+
         g.endFill()
     }, [grid])
     return (

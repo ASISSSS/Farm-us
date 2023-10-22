@@ -8,7 +8,6 @@ const Background = () => {
         <>
             <Sprite
                 image={map}
-                scale={1}
                 anchor={0}
                 width={WORLD_SIZE.WIDTH}
                 height={WORLD_SIZE.HEIGHT}

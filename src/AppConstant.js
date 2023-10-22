@@ -5,15 +5,15 @@ const VIEW = {
 }
 
 const WORLD_SIZE = {
-    WIDTH: 12000,
-    HEIGHT: 6922,
+    WIDTH: 1200,
+    HEIGHT: 693,
 }
 
 const PLAYER = {
-    SPEED: 15,
+    SPEED: 2,
     CHANGE_IMAGE_FRAME: 10,
-    POSITION_START_X: 500,
-    POSITION_START_Y: 500,
+    POSITION_START_X: 620,
+    POSITION_START_Y: 200,
 }
 
 const CAMERA = {
@@ -32,11 +32,17 @@ const SPWANERS = {
     YELLOW: { x: 5200, y: 1300, timer: 100, type: DUMMIES_TYPES.YELLOW }
 }
 
+const GRID = {
+    CELL_SIZE: 2,
+    LINE_WIDTH: 0.1,
+}
+
 export {
     VIEW,
     WORLD_SIZE,
     PLAYER,
     DUMMIES_TYPES,
     SPWANERS,
-    CAMERA
+    CAMERA,
+    GRID,
 }
