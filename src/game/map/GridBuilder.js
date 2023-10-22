@@ -26,7 +26,7 @@ const GridBuilder = ({
     const [isEditing, setEditing] = useState(false)
 
     const [pos, setPos] = useState({ x: 0, y: 0 })
-    useTick(delta => {
+    useTick(() => {
         if (!clickPos.current) return
 
         if (clickPos.current.x !== pos.x || clickPos.current.y !== pos.y) {
