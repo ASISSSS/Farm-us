@@ -19,7 +19,7 @@ const GridBuilder = ({
         for (let i = 0; i < nbHori; i++) {
             defaultGrid[i] = new Array(nbVert)
             for (let j = 0; j < nbVert; j++) {
-                defaultGrid[i][j] = 0
+                defaultGrid[i][j] = 1
             }
         }
         return defaultGrid
@@ -35,8 +35,6 @@ const GridBuilder = ({
             setPos({ x: clickPos.current.x, y: clickPos.current.y })
             if (isEditing) {
                 setGrid(p => {
-                    const nbVert = Math.round(WORLD_SIZE.WIDTH / CELL_SIZE)
-
                     const colIndex = Math.floor(clickPos.current.x / CELL_SIZE)
                     const rowIndex = Math.floor(clickPos.current.y / CELL_SIZE)
                     const newRow = [
@@ -74,7 +72,7 @@ const GridBuilder = ({
         for (let i = 0; i < nbHori; i++) {
             for (let j = 0; j < nbVert; j++) {
                 g.beginFill(0xff0000)
-                if (grid[i][j] === 1) g.drawCircle(j * CELL_SIZE + (CELL_SIZE / 2), i * CELL_SIZE + (CELL_SIZE / 2), CELL_SIZE / 2)
+                if (grid[i][j] === 0) g.drawCircle(j * CELL_SIZE + (CELL_SIZE / 2), i * CELL_SIZE + (CELL_SIZE / 2), CELL_SIZE / 2)
             }
         }
         g.endFill()
