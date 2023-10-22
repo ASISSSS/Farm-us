@@ -17,7 +17,7 @@ const PLAYER = {
 
 const ENTITY = {
     SPEED: 15,
-    CHANGE_IMAGE_FRAME: 10,
+    CHANGE_IMAGE_FRAME: 8,
 }
 
 const CAMERA = {
@@ -28,13 +28,17 @@ const DUMMIES_TYPES = {
     BLUE: 0,
     GREEN: 1,
     YELLOW: 2,
+    ALIENS: 3
 }
 
 const SPWANERS = {
     BLUE: { x: 4000, y: 1300, timer: 1000, maxSpawn: 1, type: DUMMIES_TYPES.BLUE },
     GREEN: { x: 4600, y: 1300, timer: 2000, maxSpawn: 2, type: DUMMIES_TYPES.GREEN },
-    YELLOW: { x: 5200, y: 1300, timer: 100, maxSpawn: 5, type: DUMMIES_TYPES.YELLOW },
+    YELLOW: { x: 5200, y: 1300, timer: 500, maxSpawn: 5, type: DUMMIES_TYPES.YELLOW },
+    ALIENS: { x: 5800, y: 1300, timer: 50, maxSpawn: 28, type: DUMMIES_TYPES.ALIENS },
 }
+
+
 
 export {
     VIEW,

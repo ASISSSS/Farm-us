@@ -1,6 +1,7 @@
-import { blue1, blue2, green1, green2, yellow1, yellow2 } from './characters'
+import { blue1, blue2, green1, green2, yellow1, yellow2, aliens1, aliens2 } from './characters'
 import { player1, player2 } from './player'
 import { green, blue, yellow, aliens, dirt } from './spawners'
+import { O2, bed, bedReversed, nuclearWaste, cargoTrash, postNav } from './others'
 
 export {
     blue,
@@ -15,5 +16,13 @@ export {
     player1,
     player2,
     aliens,
-    dirt
+    aliens1,
+    aliens2,
+    dirt,
+    O2,
+    bed,
+    cargoTrash,
+    nuclearWaste,
+    bedReversed,
+    postNav
 }

@@ -86,7 +86,7 @@ const Player = forwardRef((props, ref) => {
                 ref={ ref }
                 image={ image }
                 anchor={ 0.5 }
-                scale={ 1 }
+                scale={ 2 }
                 x={ pos.x }
                 y={ pos.y }
             />
