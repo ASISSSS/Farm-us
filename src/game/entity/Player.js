@@ -1,7 +1,7 @@
 import { Graphics, Sprite, useTick } from '@pixi/react'
 import React, { forwardRef, useCallback, useState } from 'react'
 import { player1, player2 } from '../../assets'
-import { PLAYER, WORLD_SIZE } from '../../AppConstant'
+import { ENTITY, PLAYER, WORLD_SIZE } from '../../AppConstant'
 
 const Player = forwardRef((props, ref) => {
     const {
@@ -15,7 +15,7 @@ const Player = forwardRef((props, ref) => {
 
     const [image, setImage] = useState(player1)
     const [isChangeImage, setIsChangeImage] = useState(false)
-    const [frame, setFrame] = useState(PLAYER.CHANGE_IMAGE_FRAME - 1)
+    const [frame, setFrame] = useState(ENTITY.CHANGE_IMAGE_FRAME - 1)
     const [imageIndex, setIndex] = useState(0)
 
     const updateImage = () => {
@@ -48,7 +48,7 @@ const Player = forwardRef((props, ref) => {
             const newFrame = frame + 1
             setFrame(newFrame)
 
-            if ((newFrame % PLAYER.CHANGE_IMAGE_FRAME) === 0) {
+            if ((newFrame % ENTITY.CHANGE_IMAGE_FRAME) === 0) {
                 setIsChangeImage(true)
             }
 
