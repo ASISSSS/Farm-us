@@ -4,6 +4,8 @@ import green1 from './green1.png'
 import green2 from './green2.png'
 import yellow1 from './yellow1.png'
 import yellow2 from './yellow2.png'
+import aliens1 from './aliens1.png'
+import aliens2 from './aliens2.png'
 
 export {
     blue1,
@@ -11,5 +13,7 @@ export {
     green1,
     green2,
     yellow1,
-    yellow2
+    yellow2,
+    aliens1,
+    aliens2
 }

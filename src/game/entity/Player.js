@@ -1,7 +1,7 @@
 import { Graphics, Sprite, useTick } from '@pixi/react'
 import React, { forwardRef, useCallback, useEffect, useState } from 'react'
 import { player1, player2 } from '../../assets'
-import { GRID, PLAYER } from '../../AppConstant'
+import { GRID, ENTITY, PLAYER } from '../../AppConstant'
 import { getAStarInstance } from '../../utils/pathfinding/AStart'
 import { formatPath, posToGrid } from '../../utils/GridUtil'
 
@@ -20,7 +20,7 @@ const Player = forwardRef((props, ref) => {
 
     const [image, setImage] = useState(player1)
     const [isChangeImage, setIsChangeImage] = useState(false)
-    const [frame, setFrame] = useState(PLAYER.CHANGE_IMAGE_FRAME - 1)
+    const [frame, setFrame] = useState(ENTITY.CHANGE_IMAGE_FRAME - 1)
     const [imageIndex, setIndex] = useState(0)
 
     const updateImage = () => {
@@ -53,12 +53,12 @@ const Player = forwardRef((props, ref) => {
             const moveX = distNormalize.x * delta * PLAYER.SPEED
             const moveY = distNormalize.y * delta * PLAYER.SPEED
 
-            // const newFrame = frame + 1
-            // setFrame(newFrame)
+            const newFrame = frame + 1
+            setFrame(newFrame)
 
-            // if ((newFrame % PLAYER.CHANGE_IMAGE_FRAME) === 0) {
-            //     setIsChangeImage(true)
-            // }
+            if ((newFrame % ENTITY.CHANGE_IMAGE_FRAME) === 0) {
+                setIsChangeImage(true)
+            }
 
             updateImage()
             if (Math.abs(moveX) >= Math.abs(distX) && Math.abs(moveY) >= Math.abs(distY)) {
@@ -92,14 +92,14 @@ const Player = forwardRef((props, ref) => {
     return (
         <>
             <Sprite
-                ref={ref}
-                image={image}
-                anchor={0.5}
-                scale={0.3}
-                x={pos.x}
-                y={pos.y - 3 * GRID.CELL_SIZE}
+                ref={ ref }
+                image={ image }
+                anchor={ 0.5 }
+                scale={ 0.3 }
+                x={ pos.x }
+                y={ pos.y - 3 * GRID.CELL_SIZE }
             />
-            {/* <Graphics draw={draw} /> */}
+            {/* <Graphics draw={draw} /> */ }
         </>
     )
 })

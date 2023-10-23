@@ -1,18 +1,63 @@
 import React from 'react'
 import { Sprite } from '@pixi/react'
 import map from '../../assets/map.png'
-import { WORLD_SIZE } from '../../AppConstant'
+import { POSITION, WORLD_SIZE } from '../../AppConstant'
+import { adminDesk, bed, bedReversed, cargoTrash, nuclearWaste, O2, postNav } from '../../assets'
 
 const Background = () => {
     return (
         <>
             <Sprite
-                image={map}
-                anchor={0}
-                width={WORLD_SIZE.WIDTH}
-                height={WORLD_SIZE.HEIGHT}
-                x={0}
-                y={0}
+                image={ map }
+                anchor={ 0 }
+                width={ WORLD_SIZE.WIDTH }
+                height={ WORLD_SIZE.HEIGHT }
+                x={ 0 }
+                y={ 0 }
+            />
+
+            { POSITION.BED.REVERSED.map((reversedProps) => (
+                <Sprite
+                    image={ bedReversed }
+                    scale={ POSITION.BED.SCALE }
+                    { ...reversedProps }
+                />
+            )) }
+            { POSITION.BED.NORMAL.map((reversedProps) => (
+                <Sprite
+                    image={ bed }
+                    scale={ POSITION.BED.SCALE }
+                    { ...reversedProps }
+                />
+            )) }
+            <Sprite
+                image={ cargoTrash }
+                { ...POSITION.TRASH }
+            />
+            <Sprite
+                image={ postNav }
+                { ...POSITION.NAVIGATION }
+            />
+            {
+                POSITION.NUCLEARTRASH.POSITIONS.map((nuclearProps) => (
+                    <Sprite
+                        image={ nuclearWaste }
+                        scale={ POSITION.NUCLEARTRASH.SCALE }
+                        { ...nuclearProps }
+                    />))
+            }
+            {
+                POSITION.O2.POSITIONS.map((o2Props) => (
+                    <Sprite
+                        image={ O2 }
+                        scale={ POSITION.O2.SCALE }
+                        { ...o2Props }
+                    />))
+            }
+            <Sprite
+                image={ adminDesk }
+                anchor={ 0 }
+                { ...POSITION.ADMINDESK }
             />
         </>
     )

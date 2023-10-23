@@ -103,6 +103,7 @@ const Game = ({
                     height={height}
                     pointerdown={(e) => {
                         clickPos.current = viewportRef.current.toWorld(e.data.global.x, e.data.global.y)
+                        console.log(clickPos.current)
                     }}
                 >
                     <Background />
@@ -110,7 +111,9 @@ const Game = ({
                     <Spawner {...SPWANERS.GREEN}/>
                     <Spawner {...SPWANERS.YELLOW}/>
                     {/* <GridBuilder clickPos={clickPos} /> */}
+                    <Spawner {...SPWANERS.ALIENS}/>
                     <Player x={PLAYER.POSITION_START_X} y={PLAYER.POSITION_START_Y} target={clickPos} ref={playerRef} />
+
                 </Viewport>
             </Stage>
         </>
