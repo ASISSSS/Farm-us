@@ -32,12 +32,53 @@ const DUMMIES_TYPES = {
 }
 
 const SPWANERS = {
-    BLUE: { x: 4000, y: 1300, timer: 1000, maxSpawn: 1, type: DUMMIES_TYPES.BLUE },
-    GREEN: { x: 4600, y: 1300, timer: 2000, maxSpawn: 2, type: DUMMIES_TYPES.GREEN },
-    YELLOW: { x: 5200, y: 1300, timer: 500, maxSpawn: 5, type: DUMMIES_TYPES.YELLOW },
-    ALIENS: { x: 5800, y: 1300, timer: 50, maxSpawn: 28, type: DUMMIES_TYPES.ALIENS },
+    BLUE: { x: 400, y: 130, timer: 1000, maxSpawn: 1, type: DUMMIES_TYPES.BLUE },
+    GREEN: { x: 460, y: 130, timer: 2000, maxSpawn: 2, type: DUMMIES_TYPES.GREEN },
+    YELLOW: { x: 520, y: 130, timer: 500, maxSpawn: 5, type: DUMMIES_TYPES.YELLOW },
+    ALIENS: { x: 580, y: 130, timer: 50, maxSpawn: 28, type: DUMMIES_TYPES.ALIENS },
 }
 
+const POSITION = {
+    ADMINDESK: { x: 700, y: 395.5, scale: 0.5 },
+    NAVIGATION: { x: 1042, y: 308, scale: 0.3 },
+    BED: {
+        SCALE: 0.8,
+        REVERSED: [
+            { x: 384, y: 250 },
+            { x: 384, y: 270 },
+            { x: 384, y: 290 },
+            { x: 384, y: 310 },
+        ],
+        NORMAL: [
+            { x: 460, y: 250 },
+            { x: 460, y: 270 },
+            { x: 460, y: 290 },
+            { x: 460, y: 310 },
+            { x: 460, y: 330 },
+        ]
+    },
+    TRASH: { x: 560, y: 480, scale: 0.8 },
+    NUCLEARTRASH: {
+        SCALE: 0.8,
+        POSITIONS:  [
+            { x: 87, y: 274 },
+            { x: 87, y: 316 },
+            { x: 87, y: 336 },
+            { x: 87, y: 382 },
+        ]
+    },
+    O2: {
+        SCALE: 0.8,
+        POSITIONS:  [
+            { x: 765, y: 280 },
+            { x: 755, y: 280 },
+            { x: 735, y: 300 },
+            { x: 745, y: 300 },
+            { x: 730, y: 310 },
+            { x: 741, y: 310 },
+        ]
+    }
+}
 
 
 const GRID = {
@@ -54,4 +95,5 @@ export {
     CAMERA,
     GRID,
     ENTITY,
+    POSITION,
 }

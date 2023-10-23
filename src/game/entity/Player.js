@@ -53,12 +53,12 @@ const Player = forwardRef((props, ref) => {
             const moveX = distNormalize.x * delta * PLAYER.SPEED
             const moveY = distNormalize.y * delta * PLAYER.SPEED
 
-            // const newFrame = frame + 1
-            // setFrame(newFrame)
+            const newFrame = frame + 1
+            setFrame(newFrame)
 
-            // if ((newFrame % ENTITY.CHANGE_IMAGE_FRAME) === 0) {
-            //     setIsChangeImage(true)
-            // }
+            if ((newFrame % ENTITY.CHANGE_IMAGE_FRAME) === 0) {
+                setIsChangeImage(true)
+            }
 
             updateImage()
             if (Math.abs(moveX) >= Math.abs(distX) && Math.abs(moveY) >= Math.abs(distY)) {

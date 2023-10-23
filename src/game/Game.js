@@ -113,6 +113,7 @@ const Game = ({
                     {/* <GridBuilder clickPos={clickPos} /> */}
                     <Spawner {...SPWANERS.ALIENS}/>
                     <Player x={PLAYER.POSITION_START_X} y={PLAYER.POSITION_START_Y} target={clickPos} ref={playerRef} />
+
                 </Viewport>
             </Stage>
         </>

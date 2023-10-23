@@ -4,6 +4,7 @@ import cargoTrash from './cargo_trash.png'
 import nuclearWaste from './nuclear.png'
 import O2 from './o2.png'
 import postNav from './poste_nav.png'
+import adminDesk from './admin_desk.png'
 
 export {
     bed,
@@ -11,5 +12,6 @@ export {
     cargoTrash,
     nuclearWaste,
     O2,
-    postNav
+    postNav,
+    adminDesk
 }

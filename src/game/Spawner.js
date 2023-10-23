@@ -7,7 +7,7 @@ import { TextStyle } from 'pixi.js'
 
 const Spawner = forwardRef((props, ref) => {
     const { x, y, timer, type, maxSpawn } = props
-    const BASE_SCALE = 3
+    const BASE_SCALE = 0.1
     const timerRef = useRef()
     const [displayDirtTrickY, setDisplayDirtTrick] = useState(BASE_SCALE)
     const [spwanned, setSpwaned] = useState([])
@@ -54,19 +54,20 @@ const Spawner = forwardRef((props, ref) => {
                 ref={ ref }
                 image={ image }
                 anchor={ 0.5 }
-                scale={ 10 }
+                scale={ 0.1 }
                 x={ x }
                 y={ y }
             />
             <Text
                 text={ `Limit: ${maxSpawn}` }
-                x={ x - 115 }
-                y={ y - 115 }
+                x={ x - 10 }
+                y={ y - 10 }
+                scale={ 0.1 }
                 style={
                     new TextStyle({
                         align: 'center',
-                        fontSize: 30,
-                        fill: '#ffffff', // gradient
+                        fontSize: 40,
+                        fill: '#000000',
                         letterSpacing: 5,
                         wordWrap: true,
                         wordWrapWidth: 440,
@@ -77,7 +78,7 @@ const Spawner = forwardRef((props, ref) => {
                 ref={ ref }
                 image={ amongUsImage }
                 anchor={ 0.5 }
-                scale={ 1 }
+                scale={ 0.2 }
                 x={ x }
                 y={ y }
             />
@@ -85,7 +86,7 @@ const Spawner = forwardRef((props, ref) => {
                 ref={ ref }
                 image={ dirt }
                 anchor={ 0.5 }
-                scale={ { x: 4, y: displayDirtTrickY } }
+                scale={ { x: 0.1, y: 0.1 } }
                 x={ x }
                 y={ y }
             />
