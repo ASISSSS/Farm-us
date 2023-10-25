@@ -3,6 +3,7 @@ import { player1, player2 } from './player'
 import { green, blue, yellow, aliens, dirt } from './spawners'
 import { O2, bed, bedReversed, nuclearWaste, cargoTrash, postNav, adminDesk } from './others'
 import map from './map.png'
+import foreground from './foreground.png'
 
 
 export {
@@ -28,5 +29,6 @@ export {
     bedReversed,
     postNav,
     adminDesk,
-    map
+    map,
+    foreground
 }

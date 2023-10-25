@@ -1,13 +1,13 @@
-import React, { forwardRef, useEffect, useRef } from 'react'
+import React, { forwardRef, useRef } from 'react'
 import { Stage, PixiComponent, useApp } from '@pixi/react'
 import useResize from '../hooks/useResize'
-import { CAMERA, PLAYER, SPWANERS, VIEW, WORLD_SIZE } from '../AppConstant'
+import { PLAYER, SPWANERS, VIEW, WORLD_SIZE } from '../AppConstant'
 import { Viewport as PixiViewport } from 'pixi-viewport'
 import { EventSystem } from 'pixi.js'
 import PropTypes from 'prop-types'
 import Background from './map/Background'
 import { Player, Spawner } from './entity'
-import GridBuilder from './map/GridBuilder'
+import Foreground from './map/Foreground'
 
 const PixiViewportComponent = PixiComponent('Viewport', {
     create: (props) => {
@@ -113,7 +113,7 @@ const Game = ({
                     {/* <GridBuilder clickPos={clickPos} /> */}
                     <Spawner {...SPWANERS.ALIENS}/>
                     <Player x={PLAYER.POSITION_START_X} y={PLAYER.POSITION_START_Y} target={clickPos} ref={playerRef} />
-
+                    <Foreground />
                 </Viewport>
             </Stage>
         </>
