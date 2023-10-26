@@ -5,15 +5,19 @@ import React from 'react'
 
 const Foreground = () => (
     <>
-        { POSITION.BED.REVERSED.map((reversedProps) => (
+        { POSITION.BED.REVERSED.map((reversedProps, i) => (
             <Sprite
+                key={i}
+
                 image={ bedReversed }
                 scale={ POSITION.BED.SCALE }
                 { ...reversedProps }
             />
         )) }
-        { POSITION.BED.NORMAL.map((reversedProps) => (
+        { POSITION.BED.NORMAL.map((reversedProps, i) => (
             <Sprite
+                key={i}
+
                 image={ bed }
                 scale={ POSITION.BED.SCALE }
                 { ...reversedProps }
@@ -28,16 +32,20 @@ const Foreground = () => (
             { ...POSITION.NAVIGATION }
         />
         {
-            POSITION.NUCLEARTRASH.POSITIONS.map((nuclearProps) => (
+            POSITION.NUCLEARTRASH.POSITIONS.map((nuclearProps, i) => (
                 <Sprite
+                    key={i}
+
                     image={ nuclearWaste }
                     scale={ POSITION.NUCLEARTRASH.SCALE }
                     { ...nuclearProps }
                 />))
         }
         {
-            POSITION.O2.POSITIONS.map((o2Props) => (
+            POSITION.O2.POSITIONS.map((o2Props, i) => (
                 <Sprite
+                    key={i}
+
                     image={ O2 }
                     scale={ POSITION.O2.SCALE }
                     { ...o2Props }

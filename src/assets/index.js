@@ -30,5 +30,5 @@ export {
     postNav,
     adminDesk,
     map,
-    foreground
+    foreground,
 }
