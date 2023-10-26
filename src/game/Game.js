@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef } from 'react'
+import React, { forwardRef, useEffect, useRef } from 'react'
 import { Stage, PixiComponent, useApp } from '@pixi/react'
 import useResize from '../hooks/useResize'
 import { PLAYER, SPWANERS, VIEW, WORLD_SIZE } from '../AppConstant'
@@ -6,8 +6,14 @@ import { Viewport as PixiViewport } from 'pixi-viewport'
 import { EventSystem } from 'pixi.js'
 import PropTypes from 'prop-types'
 import Background from './map/Background'
-import { Player, Spawner } from './entity'
-import Foreground from './map/Foreground'
+import { Player } from './entity'
+// import Foreground from './map/Foreground'
+import DummySpawner from './entity/DummySpawner'
+import Dummy from './entity/Dummy'
+import useDummiesState, { dummiesAction } from '../hooks/gameState/useDummiesState'
+import { playerAction } from '../hooks/gameState/usePlayerState'
+import useGameState, { gameStateAction } from '../hooks/gameState/useGameState'
+// import GridBuilder from './map/GridBuilder'
 
 const PixiViewportComponent = PixiComponent('Viewport', {
     create: (props) => {
@@ -23,8 +29,6 @@ const PixiViewportComponent = PixiComponent('Viewport', {
         })
         viewport.drag().pinch().wheel().clampZoom()
         viewport.snap(PLAYER.POSITION_START_X, PLAYER.POSITION_START_Y, { removeOnComplete: true })
-        // viewport.snapZoom({ width: props.width / 5, height: props.height / 5 })
-        // viewport.snapZoom({ width: props.width, height: props.height })
         return viewport
     },
     willUnmount: (viewport) => {
@@ -42,20 +46,61 @@ const Viewport = forwardRef((props, ref) => {
             ref={ref}
             app={app}
             {...props}
+
+            pointerdown={(e) => {
+                gameStateAction.setClickPos(ref.current.toWorld(e.data.global.x, e.data.global.y))
+            }}
         />
     )
 })
+
+// to avoid rerender the viewport
+const ClickManager = () => {
+    const {
+        clickPos,
+    } = useGameState()
+    const dummies = useDummiesState()
+
+    useEffect(() => {
+        if (!clickPos) return
+        const selectedDummies = dummies.filter(dummy => dummy.isSelected)
+        if (selectedDummies.length) {
+            const changes = selectedDummies.map(dummy => ({ id: dummy.id, target: clickPos, isSelected: false }))
+            dummiesAction.updateAll(changes)
+            return
+        }
+        playerAction.setPlayer({ target: clickPos })
+    }, [clickPos])
+
+    return null
+}
+
+const Dummies = () => {
+    const dummies = useDummiesState()
+    return (
+        <>
+            {
+                dummies.map((d, i) => (
+                    <Dummy
+                        key={i}
+
+                        id={d.id}
+                        pos={d.pos}
+                        target={d.target}
+                        type={d.type}
+                        isSelected={d.isSelected}
+                    />
+                ))
+            }
+        </>
+    )
+}
 
 const Game = ({
     setView = () => {},
 }) => {
     // get the actual viewport instance
     const viewportRef = useRef()
-
-    // get ref of the bunny to follow
-    const playerRef = useRef()
-
-    const clickPos = useRef()
 
     const [width, height] = useResize()
 
@@ -64,14 +109,6 @@ const Game = ({
         autoDensity: true,
         backgroundColor: 0x999999,
     }
-
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         const viewport = viewportRef.current
-
-    //         viewport.follow(playerRef.current, { speed: CAMERA.SPEED })
-    //     }, 500)
-    // }, [])
 
     return (
         <>
@@ -101,21 +138,20 @@ const Game = ({
 
                     width={width}
                     height={height}
-                    pointerdown={(e) => {
-                        clickPos.current = viewportRef.current.toWorld(e.data.global.x, e.data.global.y)
-                        console.log(clickPos.current)
-                    }}
                 >
+                    <ClickManager />
                     <Background />
-                    <Spawner {...SPWANERS.BLUE}/>
-                    <Spawner {...SPWANERS.GREEN}/>
-                    <Spawner {...SPWANERS.YELLOW}/>
-                    {/* <GridBuilder clickPos={clickPos} /> */}
-                    {SPWANERS.ALIENS.map((spawner) => (
-                        <Spawner {...spawner}/>
-                    ))}
-                    <Player x={PLAYER.POSITION_START_X} y={PLAYER.POSITION_START_Y} target={clickPos} ref={playerRef} />
-                    <Foreground />
+                    <DummySpawner {...SPWANERS.BLUE} />
+                    <DummySpawner {...SPWANERS.GREEN} />
+                    <DummySpawner {...SPWANERS.YELLOW} />
+                    {/* {SPWANERS.ALIENS.map((spawner) => (
+                        <Spawner {...spawner} />
+                    ))} */}
+                    <Dummies />
+                    <Player />
+                    {/* <Foreground /> */}
+
+                    {/* <GridBuilder /> */}
                 </Viewport>
             </Stage>
         </>

@@ -1,26 +1,26 @@
 import { GRID } from '../AppConstant'
 
 const posToGrid = (pos) => {
-    return [
-        Math.floor(pos[0] / GRID.CELL_SIZE),
-        Math.floor(pos[1] / GRID.CELL_SIZE),
-    ]
+    return {
+        x: Math.floor(pos.x / GRID.CELL_SIZE),
+        y: Math.floor(pos.y / GRID.CELL_SIZE),
+    }
 }
 
 const gridToPos = (gridPos) => {
-    return [
-        gridPos[0] * GRID.CELL_SIZE + (GRID.CELL_SIZE / 2),
-        gridPos[1] * GRID.CELL_SIZE + (GRID.CELL_SIZE / 2),
-    ]
+    return {
+        x: gridPos.x * GRID.CELL_SIZE + (GRID.CELL_SIZE / 2),
+        y: gridPos.y * GRID.CELL_SIZE + (GRID.CELL_SIZE / 2),
+    }
 }
 
 const cleanPath = (path = []) => {
     if (path.length <= 1) return path
     let newPath = []
-    let dir = [
-        path[1][0] - path[0][0],
-        path[1][1] - path[0][1],
-    ]
+    let dir = {
+        x: path[1].x - path[0].x,
+        y: path[1].y - path[0].y,
+    }
     path.forEach((p, i) => {
         if (i === path.length - 1) {
             newPath.push(p)
@@ -28,8 +28,8 @@ const cleanPath = (path = []) => {
         }
 
         let next = path[i + 1]
-        let tmpDir = [next[0] - p[0], next[1] - p[1]]
-        if (dir[0] !== tmpDir[0] || dir[1] !== tmpDir[1]) {
+        let tmpDir = { x: next.x - p.x, y: next.y - p.y }
+        if (dir.x !== tmpDir.x || dir.y !== tmpDir.y) {
             dir = tmpDir
             newPath.push(p)
         }
@@ -38,7 +38,7 @@ const cleanPath = (path = []) => {
 }
 
 const formatPath = (path = []) => {
-    const formatted = path.map(p => gridToPos([p.x, p.y]))
+    const formatted = path.map(p => gridToPos(p))
     return cleanPath(formatted)
 }
 

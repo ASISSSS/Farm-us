@@ -23,12 +23,12 @@ class Graph {
         }
     }
 
-    cleanDirty = function () {
-        for (let i = 0; i < this.dirtyNodes.length; i++) {
-            this.dirtyNodes[i].clean()
-        }
-        this.dirtyNodes = []
-    }
+    // cleanDirty = function () {
+    //     for (let i = 0; i < this.dirtyNodes.length; i++) {
+    //         this.dirtyNodes[i].clean()
+    //     }
+    //     this.dirtyNodes = []
+    // }
 
     markDirty = function (node) {
         this.dirtyNodes.push(node)

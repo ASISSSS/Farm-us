@@ -3,6 +3,7 @@ import BinaryHeap from './BinaryHeap'
 import Graph from './Graph'
 import jsonGrid from '../../assets/grid.json'
 import GridNode from './GridNode'
+import { posToGrid } from '../GridUtil'
 
 function pathTo(node) {
     let curr = node
@@ -20,15 +21,24 @@ class AStar {
         this.graph = new Graph(jsonGrid.grid)
     }
 
+    isOutside = (pos = {}) => {
+        const { x, y } = pos
+        return x < 0 || y < 0 || y >= this.grid.length || x >= this.grid[0]?.length
+    }
+
     // start = [x, y], end = [x, y]
-    search = function (start, end) {
+    search = function (startPos, endPos) {
+        const start = posToGrid(startPos)
+        const end = posToGrid(endPos)
+        if (this.isOutside(start) || this.isOutside(end)) return []
+
         this.graph.init()
-        this.graph.cleanDirty()
+        // this.graph.cleanDirty()
 
         let binaryHeap = new BinaryHeap(node => node.f)
 
-        let startNode = new GridNode(start[0], start[1], this.grid[start[1]][start[0]])
-        let endNode = new GridNode(end[0], end[1], this.grid[end[1]][end[0]])
+        let startNode = new GridNode(start.x, start.y, this.grid[start.y][start.x])
+        let endNode = new GridNode(end.x, end.y, this.grid[end.y][end.x])
 
         let closestNode = startNode // set the start node to be the closest
 
@@ -105,15 +115,6 @@ class AStar {
     }
 }
 
-let aStar
+let aStar = new AStar()
 
-const getAStarInstance = (regen = false) => {
-    if (!aStar || regen) aStar = new AStar()
-
-    return aStar
-}
-
-export default AStar
-export {
-    getAStarInstance,
-}
+export default aStar

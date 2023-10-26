@@ -1,8 +1,8 @@
 import React, { forwardRef, useEffect, useRef, useState } from 'react'
 import { Sprite, Text } from '@pixi/react'
-import { green, blue, yellow, aliens, aliens1, aliens2, blue1, green1, yellow1, dirt, blue2, green2, yellow2 } from '../assets'
-import { DUMMIES_TYPES } from '../AppConstant'
-import Dummy from './entity/Dummy'
+import { green, blue, yellow, aliens, aliens1, aliens2, blue1, green1, yellow1, dirt, blue2, green2, yellow2 } from '../../assets'
+import { DUMMIES_TYPES } from '../../AppConstant'
+import Dummy from './Dummy'
 import { TextStyle } from 'pixi.js'
 
 const Spawner = forwardRef((props, ref) => {
