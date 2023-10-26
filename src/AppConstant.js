@@ -32,10 +32,15 @@ const DUMMIES_TYPES = {
 }
 
 const SPWANERS = {
-    BLUE: { x: 400, y: 130, timer: 1000, maxSpawn: 1, type: DUMMIES_TYPES.BLUE },
-    GREEN: { x: 460, y: 130, timer: 2000, maxSpawn: 2, type: DUMMIES_TYPES.GREEN },
-    YELLOW: { x: 520, y: 130, timer: 500, maxSpawn: 5, type: DUMMIES_TYPES.YELLOW },
-    ALIENS: { x: 580, y: 130, timer: 50, maxSpawn: 28, type: DUMMIES_TYPES.ALIENS },
+    BLUE: { x: 615, y: 130, timer: 1000, maxSpawn: 1, type: DUMMIES_TYPES.BLUE },
+    GREEN: { x: 700, y: 278, timer: 2000, maxSpawn: 2, type: DUMMIES_TYPES.GREEN },
+    YELLOW: { x: 550, y: 278, timer: 500, maxSpawn: 5, type: DUMMIES_TYPES.YELLOW },
+    ALIENS: [
+        { x: 915, y: 546, timer: 50, maxSpawn: 28, type: DUMMIES_TYPES.ALIENS },
+        { x: 117, y: 382, timer: 50, maxSpawn: 28, type: DUMMIES_TYPES.ALIENS },
+        { x: 1010, y: 160, timer: 50, maxSpawn: 28, type: DUMMIES_TYPES.ALIENS },
+        { x: 610, y: 610, timer: 50, maxSpawn: 28, type: DUMMIES_TYPES.ALIENS },
+    ],
 }
 
 const POSITION = {

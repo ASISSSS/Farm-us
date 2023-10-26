@@ -111,7 +111,9 @@ const Game = ({
                     <Spawner {...SPWANERS.GREEN}/>
                     <Spawner {...SPWANERS.YELLOW}/>
                     {/* <GridBuilder clickPos={clickPos} /> */}
-                    <Spawner {...SPWANERS.ALIENS}/>
+                    {SPWANERS.ALIENS.map((spawner) => (
+                        <Spawner {...spawner}/>
+                    ))}
                     <Player x={PLAYER.POSITION_START_X} y={PLAYER.POSITION_START_Y} target={clickPos} ref={playerRef} />
                     <Foreground />
                 </Viewport>
