@@ -24,15 +24,17 @@ const Background = () => {
                 x={ 0 }
                 y={ 0 }
             />
-            { POSITION.BED.REVERSED.map((reversedProps) => (
+            { POSITION.BED.REVERSED.map((reversedProps, index) => (
                 <Sprite
+                    key={index}
                     image={ bedReversed }
                     scale={ POSITION.BED.SCALE }
                     { ...reversedProps }
                 />
             )) }
-            { POSITION.BED.NORMAL.map((reversedProps) => (
+            { POSITION.BED.NORMAL.map((reversedProps, index) => (
                 <Sprite
+                    key={index}
                     image={ bed }
                     scale={ POSITION.BED.SCALE }
                     { ...reversedProps }
@@ -47,16 +49,18 @@ const Background = () => {
                 { ...POSITION.NAVIGATION }
             />
             {
-                POSITION.NUCLEARTRASH.POSITIONS.map((nuclearProps) => (
+                POSITION.NUCLEARTRASH.POSITIONS.map((nuclearProps, index) => (
                     <Sprite
+                        key={index}
                         image={ nuclearWaste }
                         scale={ POSITION.NUCLEARTRASH.SCALE }
                         { ...nuclearProps }
                     />))
             }
             {
-                POSITION.O2.POSITIONS.map((o2Props) => (
+                POSITION.O2.POSITIONS.map((o2Props, index) => (
                     <Sprite
+                        key={index}
                         image={ O2 }
                         scale={ POSITION.O2.SCALE }
                         { ...o2Props }
@@ -149,21 +153,21 @@ const Background = () => {
             <Sprite
                 image={ cafetTable }
                 anchor={ 0.5 }
-                scale={ 0.4 }
+                scale={ 0.3 }
                 x={ 549 }
                 y={ 168 }
             />
             <Sprite
                 image={ cafetTable }
                 anchor={ 0.5 }
-                scale={ 0.4 }
+                scale={ 0.3 }
                 x={ 700 }
                 y={ 168 }
             />
             <Sprite
                 image={ cafetTable }
                 anchor={ 0.5 }
-                scale={ 0.4 }
+                scale={ 0.3 }
                 x={ 625 }
                 y={ 278 }
             />
