@@ -2,11 +2,14 @@ import React, { useCallback, useState } from 'react'
 import { Graphics, Sprite, useTick } from '@pixi/react'
 import { GRID, WORLD_SIZE } from '../../AppConstant'
 import jsonGrid from '../../assets/grid.json'
+import useGameState from '../../hooks/gameState/useGameState'
 
 
-const GridBuilder = ({
-    clickPos,
-}) => {
+const GridBuilder = () => {
+    const {
+        clickPos,
+    } = useGameState()
+
     const [grid, setGrid] = useState(() => {
         if (jsonGrid?.grid) return jsonGrid.grid
 
@@ -27,14 +30,14 @@ const GridBuilder = ({
 
     const [pos, setPos] = useState({ x: 0, y: 0 })
     useTick(() => {
-        if (!clickPos.current) return
+        if (!clickPos) return
 
-        if (clickPos.current.x !== pos.x || clickPos.current.y !== pos.y) {
-            setPos({ x: clickPos.current.x, y: clickPos.current.y })
+        if (clickPos.x !== pos.x || clickPos.y !== pos.y) {
+            setPos({ x: clickPos.x, y: clickPos.y })
             if (isEditing) {
                 setGrid(p => {
-                    const colIndex = Math.floor(clickPos.current.x / GRID.CELL_SIZE)
-                    const rowIndex = Math.floor(clickPos.current.y / GRID.CELL_SIZE)
+                    const colIndex = Math.floor(clickPos.x / GRID.CELL_SIZE)
+                    const rowIndex = Math.floor(clickPos.y / GRID.CELL_SIZE)
                     const newRow = [
                         ...p[rowIndex].slice(0, colIndex),
                         p[rowIndex][colIndex] === 1 ? 0 : 1,

@@ -15,9 +15,9 @@ import {
     green2,
     yellow2,
     superAliens, superAliens2
-} from '../assets'
-import { DUMMIES_TYPES } from '../AppConstant'
-import Dummy from './entity/Dummy'
+} from '../../assets'
+import { DUMMIES_TYPES } from '../../AppConstant'
+import Dummy from './Dummy'
 import { TextStyle } from 'pixi.js'
 
 const Spawner = forwardRef((props, ref) => {

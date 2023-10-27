@@ -32,9 +32,9 @@ const DUMMIES_TYPES = {
 }
 
 const SPWANERS = {
-    BLUE: { x: 625, y: 130, timer: 1000, maxSpawn: 1, type: DUMMIES_TYPES.BLUE },
+    BLUE: { x: 615, y: 130, timer: 10, maxSpawn: 1, type: DUMMIES_TYPES.BLUE },
     GREEN: { x: 700, y: 278, timer: 2000, maxSpawn: 2, type: DUMMIES_TYPES.GREEN },
-    YELLOW: { x: 550, y: 278, timer: 500, maxSpawn: 5, type: DUMMIES_TYPES.YELLOW },
+    YELLOW: { x: 550, y: 278, timer: 100, maxSpawn: 5, type: DUMMIES_TYPES.YELLOW },
     ALIENS: [
         { x: 915, y: 546, timer: 50, maxSpawn: 28, type: DUMMIES_TYPES.ALIENS },
         { x: 117, y: 382, timer: 50, maxSpawn: 28, type: DUMMIES_TYPES.ALIENS },

@@ -56,5 +56,5 @@ export {
     windowNyanCat,
     cafetTable,
     superAliens,
-    superAliens2
+    superAliens2,
 }
