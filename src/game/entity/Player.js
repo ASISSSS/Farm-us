@@ -11,6 +11,7 @@ const image = [player1, player2]
 const Player = () => {
     const { pos, target } = usePlayerState()
     const path = useRef([]) // opti
+    const orientation = useRef(1)
 
     useEffect(() => {
         const newPath = formatPath(aStar.search(pos, target))
@@ -33,6 +34,8 @@ const Player = () => {
 
         const moveX = distNormalize.x * delta * PLAYER.SPEED
         const moveY = distNormalize.y * delta * PLAYER.SPEED
+
+        orientation.current = moveX < 0 && -1 || moveX > 0 && 1 || orientation.current
 
         if (Math.abs(moveX) >= Math.abs(distX) && Math.abs(moveY) >= Math.abs(distY)) {
             path.current = path.current.slice(1)
@@ -59,7 +62,7 @@ const Player = () => {
                     images={image}
                     isPlaying={path.current.length}
                     initialFrame={0}
-                    scale={0.3}
+                    scale={{ x: orientation.current * 0.3, y: 0.3 }}
                     animationSpeed={0.2}
                 />
             </Container>
