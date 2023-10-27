@@ -1,4 +1,4 @@
-import { blue1, blue2, green1, green2, yellow1, yellow2, aliens1, aliens2 } from './characters'
+import { blue1, blue2, green1, green2, yellow1, yellow2, aliens1, aliens2, superAliens, superAliens2 } from './characters'
 import { player1, player2 } from './player'
 import { green, blue, yellow, aliens, dirt } from './spawners'
 import {
@@ -55,4 +55,6 @@ export {
     windowSetAway,
     windowNyanCat,
     cafetTable,
+    superAliens,
+    superAliens2
 }
