@@ -34,8 +34,8 @@ const aliensAction = {
         aliens = aliens.filter(d => d.id !== id)
         emitChange()
     },
-    update: (id, newAlien) => {
-        aliens = aliens.map(alien => alien.id === id ? newAlien : alien)
+    update: (id, change) => {
+        aliens = aliens.map(alien => alien.id === id ? { ...alien, ...change } : alien)
         emitChange()
     },
 }

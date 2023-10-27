@@ -112,5 +112,3 @@ const Spawner = forwardRef((props, ref) => {
         </>
     )
 })
-
-export default Spawner

@@ -9,6 +9,10 @@ const WORLD_SIZE = {
     HEIGHT: 693,
 }
 
+const ALIENS = {
+    SPEED: 2,
+}
+
 const PLAYER = {
     SPEED: 2,
     POSITION_START_X: 620,
@@ -28,7 +32,11 @@ const DUMMIES_TYPES = {
     BLUE: 0,
     GREEN: 1,
     YELLOW: 2,
-    ALIENS: 3
+}
+
+const ALIENS_TYPES = {
+    ALIENS: 0,
+    ARALIENS: 1,
 }
 
 const SPWANERS = {
@@ -36,10 +44,10 @@ const SPWANERS = {
     GREEN: { x: 700, y: 278, timer: 2000, maxSpawn: 2, type: DUMMIES_TYPES.GREEN },
     YELLOW: { x: 550, y: 278, timer: 100, maxSpawn: 5, type: DUMMIES_TYPES.YELLOW },
     ALIENS: [
-        { x: 915, y: 546, timer: 50, maxSpawn: 28, type: DUMMIES_TYPES.ALIENS },
-        { x: 117, y: 382, timer: 50, maxSpawn: 28, type: DUMMIES_TYPES.ALIENS },
-        { x: 1010, y: 160, timer: 50, maxSpawn: 28, type: DUMMIES_TYPES.ALIENS },
-        { x: 610, y: 610, timer: 50, maxSpawn: 28, type: DUMMIES_TYPES.ALIENS },
+        { x: 915, y: 546, timer: 50, maxSpawn: 28, type: ALIENS_TYPES.ALIENS },
+        { x: 117, y: 382, timer: 50, maxSpawn: 28, type: ALIENS_TYPES.ARALIENS },
+        { x: 1010, y: 160, timer: 50, maxSpawn: 28, type: ALIENS_TYPES.ARALIENS },
+        { x: 610, y: 610, timer: 50, maxSpawn: 28, type: ALIENS_TYPES.ALIENS },
     ],
 }
 
@@ -101,4 +109,6 @@ export {
     GRID,
     ENTITY,
     POSITION,
+    ALIENS,
+    ALIENS_TYPES,
 }

@@ -13,6 +13,9 @@ import Dummy from './entity/Dummy'
 import useDummiesState, { dummiesAction } from '../hooks/gameState/useDummiesState'
 import { playerAction } from '../hooks/gameState/usePlayerState'
 import useGameState, { gameStateAction } from '../hooks/gameState/useGameState'
+import Aliens from './entity/Aliens'
+import useAliensState from '../hooks/gameState/useAliensState'
+import AlienSpwanner from './entity/AliensSpawner'
 // import GridBuilder from './map/GridBuilder'
 
 const PixiViewportComponent = PixiComponent('Viewport', {
@@ -73,6 +76,25 @@ const ClickManager = () => {
     }, [clickPos])
 
     return null
+}
+
+const AllAliens = () => {
+    const alienses = useAliensState()
+    return (
+        <>
+            {
+                alienses.map((alien, index) => (
+                    <Aliens
+                        key={index}
+                        id={alien.id}
+                        pos={alien.pos}
+                        target={alien.target}
+                        type={alien.type}
+                    />
+                ))
+            }
+        </>
+    )
 }
 
 const Dummies = () => {
@@ -144,10 +166,11 @@ const Game = ({
                     <DummySpawner {...SPWANERS.BLUE} />
                     <DummySpawner {...SPWANERS.GREEN} />
                     <DummySpawner {...SPWANERS.YELLOW} />
-                    {/* {SPWANERS.ALIENS.map((spawner) => (
-                        <Spawner {...spawner} />
-                    ))} */}
+                    {SPWANERS.ALIENS.map((spawner, index) => (
+                        <AlienSpwanner {...spawner}/>
+                    ))}
                     <Dummies />
+                    <AllAliens />
                     <Player />
                     {/* <Foreground /> */}
 
