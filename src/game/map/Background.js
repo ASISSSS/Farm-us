@@ -76,7 +76,7 @@ const Background = () => {
                 image={ security }
                 anchor={ 0 }
                 scale={ 0.294 }
-                x={ 302 }
+                x={ 296.25 }
                 y={ 264 }
             />
             <Sprite
@@ -176,14 +176,14 @@ const Background = () => {
                 image={ engine }
                 anchor={ 0 }
                 scale={ 0.294 }
-                x={ 189 }
+                x={ 183.5 }
                 y={ 467.5 }
             />
             <Sprite
                 image={ engine }
                 anchor={ 0 }
                 scale={ 0.294 }
-                x={ 189 }
+                x={ 183.5 }
                 y={ 185 }
             />
         </>

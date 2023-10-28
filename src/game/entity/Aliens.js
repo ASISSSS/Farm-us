@@ -1,6 +1,6 @@
-import { AnimatedSprite, Container, Graphics, useTick } from '@pixi/react'
-import React, { memo, useCallback, useEffect, useMemo, useRef } from 'react'
-import { ALIENS, ALIENS_TYPES, DUMMIES_TYPES, GRID, PLAYER } from '../../AppConstant'
+import { AnimatedSprite, Container, useTick } from '@pixi/react'
+import React, { memo, useEffect, useMemo, useRef } from 'react'
+import { ALIENS, ALIENS_TYPES } from '../../AppConstant'
 import { formatPath } from '../../utils/GridUtil'
 import { aliens1, aliens2, superAliens, superAliens2, } from '../../assets'
 import aStar from '../../utils/pathfinding/AStart'
@@ -13,6 +13,7 @@ const Aliens = ({
     target,
 }) => {
     const path = useRef([]) // opti
+    const orientation = useRef(1)
 
     useEffect(() => {
         const newPath = formatPath(aStar.search(pos, target))
@@ -44,6 +45,8 @@ const Aliens = ({
         const moveX = distNormalize.x * delta * ALIENS.SPEED
         const moveY = distNormalize.y * delta * ALIENS.SPEED
 
+        orientation.current = moveX < 0 && -1 || moveX > 0 && 1 || orientation.current
+
         if (Math.abs(moveX) >= Math.abs(distX) && Math.abs(moveY) >= Math.abs(distY)) {
             path.current = path.current.slice(1)
             aliensAction.update(id, { pos: { x: firstPath.x, y: firstPath.y } })
@@ -60,7 +63,7 @@ const Aliens = ({
                     images={images}
                     isPlaying={!!path.current.length}
                     initialFrame={0}
-                    scale={0.3}
+                    scale={{ x: orientation.current * 0.3, y: 0.3 }}
                     animationSpeed={0.2}
                 />
             </Container>
