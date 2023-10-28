@@ -1,9 +1,8 @@
-import { AnimatedSprite, Container, Graphics, Sprite, useTick } from '@pixi/react'
-import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import useIteration from '../../hooks/useIteration'
-import { DUMMIES_TYPES, ENTITY, GRID, PLAYER } from '../../AppConstant'
-import { formatPath, posToGrid } from '../../utils/GridUtil'
-import { aliens1, aliens2, blue1, blue2, green1, green2, yellow1, yellow2 } from '../../assets'
+import { AnimatedSprite, Container, Graphics, useTick } from '@pixi/react'
+import React, { memo, useCallback, useEffect, useMemo, useRef } from 'react'
+import { DUMMIES_TYPES, GRID, PLAYER } from '../../AppConstant'
+import { formatPath } from '../../utils/GridUtil'
+import { blue1, blue2, green1, green2, yellow1, yellow2 } from '../../assets'
 import { dummiesAction } from '../../hooks/gameState/useDummiesState'
 import aStar from '../../utils/pathfinding/AStart'
 
@@ -15,6 +14,7 @@ const Dummy = ({
     isSelected,
 }) => {
     const path = useRef([]) // opti
+    const orientation = useRef(1)
 
     useEffect(() => {
         const newPath = formatPath(aStar.search(pos, target))
@@ -47,6 +47,8 @@ const Dummy = ({
         const moveX = distNormalize.x * delta * PLAYER.SPEED
         const moveY = distNormalize.y * delta * PLAYER.SPEED
 
+        orientation.current = moveX < 0 && -1 || moveX > 0 && 1 || orientation.current
+
         if (Math.abs(moveX) >= Math.abs(distX) && Math.abs(moveY) >= Math.abs(distY)) {
             path.current = path.current.slice(1)
             dummiesAction.update(id, { pos: { x: firstPath.x, y: firstPath.y } })
@@ -76,7 +78,7 @@ const Dummy = ({
                     images={images}
                     isPlaying={!!path.current.length}
                     initialFrame={0}
-                    scale={0.3}
+                    scale={{ x: orientation.current * 0.3, y: 0.3 }}
                     animationSpeed={0.2}
 
                     eventMode="static"
